@@ -12,7 +12,8 @@ RUN npm ci
 # 複製源代碼
 COPY . .
 
-# 構建生產版本
+# 設定生產環境變數並構建
+ENV VITE_API_URL=/api
 RUN npm run build
 
 # Stage 2: Nginx 服務階段
