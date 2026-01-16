@@ -2,22 +2,22 @@ import apiClient from './axios'
 
 export const authAPI = {
   login(credentials) {
-    return apiClient.post('/api/login', credentials)
+    return apiClient.post('/login', credentials)
   },
 
   register(userData) {
-    return apiClient.post('/api/register', userData)
+    return apiClient.post('/register', userData)
   },
 
   googleLogin(googleUser) {
-    return apiClient.post('/api/auth/google', googleUser)
+    return apiClient.post('/auth/google', googleUser)
   },
 
   logout() {
-    return apiClient.post('/api/logout')
+    return apiClient.post('/logout')
   },
 
   getUser() {
-    return apiClient.get('/api/me')
+    return apiClient.get('/me')
   }
 }
