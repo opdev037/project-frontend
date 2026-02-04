@@ -60,3 +60,25 @@ jobs:
 
       - name: Image digest
         run: echo "${{ steps.meta.outputs.tags }}"
+
+  # 自動部署到 K8s
+  deploy:
+    needs: [build]
+    runs-on: self-hosted
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Deploy to Kubernetes
+        env:
+          KUBECONFIG: /home/github-runner/.kube/config
+        run: |
+          echo "開始部署 Frontend 到 K8s..."
+          kubectl rollout restart deployment/frontend -n web-app
+
+      - name: Wait for rollout to complete
+        env:
+          KUBECONFIG: /home/github-runner/.kube/config
+        run: |
+          echo "等待部署完成..."
+          kubectl rollout status deployment/frontend -n web-app --timeout=120s
+          echo "Frontend 部署完成！"
