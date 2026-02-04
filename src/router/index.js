@@ -3,6 +3,7 @@ import { useAuthStore } from '@/stores/auth'
 import Login from '@/views/Login.vue'
 import Register from '@/views/Register.vue'
 import GoogleCallback from '@/views/GoogleCallback.vue'
+import Home from '@/views/Home.vue'
 import Dashboard from '@/views/Dashboard.vue'
 
 const routes = [
@@ -25,6 +26,11 @@ const routes = [
   },
   {
     path: '/',
+    name: 'Home',
+    component: Home,
+  },
+  {
+    path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
     meta: { requiresAuth: true }
