@@ -19,28 +19,24 @@
         <button class="logout-btn" @click="handleLogout">登出</button>
       </template>
       <template v-else>
-        <router-link to="/login" class="login-link">登入</router-link>
-        <router-link to="/register" class="register-btn">註冊</router-link>
+        <button class="login-link" @click="$emit('open-login')">登入</button>
+        <button class="register-btn" @click="$emit('open-register')">註冊</button>
       </template>
     </div>
   </header>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
 
-interface NavItem {
-  id: string
-  label: string
-  href: string
-}
+defineEmits(['open-login', 'open-register'])
 
 const authStore = useAuthStore()
 const router = useRouter()
 
-const navItems = ref<NavItem[]>([
+const navItems = ref([
   { id: 'n5', label: '初級(N5)', href: '/courses/n5' },
   { id: 'n4', label: '進階(N4)', href: '/courses/n4' },
   { id: 'n3', label: '中級(N3)', href: '/courses/n3' },
@@ -115,6 +111,9 @@ const handleLogout = async () => {
   font-weight: 500;
   color: var(--text-secondary);
   text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .login-link:hover {

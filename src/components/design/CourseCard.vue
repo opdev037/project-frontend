@@ -1,7 +1,8 @@
 <template>
   <article class="course-card" @click="$emit('click')">
     <div class="card-image">
-      <div class="image-placeholder">
+      <img v-if="course.image" :src="course.image" :alt="course.title" class="course-img" />
+      <div v-else class="image-placeholder">
         <span>{{ course.title.charAt(0) }}</span>
       </div>
     </div>
@@ -17,24 +18,15 @@
   </article>
 </template>
 
-<script setup lang="ts">
-export interface Course {
-  id: string
-  title: string
-  description: string
-  image?: string
-  lessons: number
-  level: string
-  isFree: boolean
-}
+<script setup>
+defineProps({
+  course: {
+    type: Object,
+    required: true
+  }
+})
 
-defineProps<{
-  course: Course
-}>()
-
-defineEmits<{
-  click: []
-}>()
+defineEmits(['click'])
 </script>
 
 <style scoped>
@@ -60,6 +52,12 @@ defineEmits<{
   height: 160px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   overflow: hidden;
+}
+
+.course-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .image-placeholder {

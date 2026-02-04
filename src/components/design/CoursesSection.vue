@@ -28,17 +28,11 @@
   </section>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, computed } from 'vue'
 import CourseCard from './CourseCard.vue'
-import type { Course } from './CourseCard.vue'
 
-interface Tab {
-  id: string
-  label: string
-}
-
-const tabs = ref<Tab[]>([
+const tabs = ref([
   { id: 'n5', label: '初級(N5)' },
   { id: 'n4', label: '進階(N4)' },
   { id: 'n3', label: '中級(N3)' },
@@ -46,11 +40,12 @@ const tabs = ref<Tab[]>([
 
 const activeTab = ref('n5')
 
-const courses = ref<Course[]>([
+const courses = ref([
   {
     id: '1',
     title: '五十音入門',
     description: '平假名、片假名完整教學',
+    image: '/images/course-hiragana.png',
     lessons: 12,
     level: 'n5',
     isFree: true,
@@ -59,6 +54,7 @@ const courses = ref<Course[]>([
     id: '2',
     title: '基礎會話',
     description: '日常問候與自我介紹',
+    image: '/images/course-conversation.png',
     lessons: 8,
     level: 'n5',
     isFree: true,
@@ -67,6 +63,7 @@ const courses = ref<Course[]>([
     id: '3',
     title: '數字與時間',
     description: '日語數字、日期、時間表達',
+    image: '/images/course-numbers.png',
     lessons: 6,
     level: 'n5',
     isFree: true,

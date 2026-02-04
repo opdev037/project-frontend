@@ -1,7 +1,22 @@
 <template>
   <section class="hero">
+    <!-- 背景輪播圖 -->
+    <div class="carousel-background">
+      <div class="carousel-track" :style="{ transform: `translateX(-${currentSlide * 100}%)` }">
+        <img
+          v-for="(image, index) in carouselImages"
+          :key="index"
+          :src="image.src"
+          :alt="image.alt"
+          class="carousel-image"
+        />
+      </div>
+      <div class="carousel-overlay"></div>
+    </div>
+
+    <!-- 內容 -->
     <div class="hero-content">
-      <span class="hero-badge">🎌 2024年 最受歡迎的日語學習平台</span>
+      <span class="hero-badge">🎌 2025年 最受歡迎的日語學習平台</span>
       <h1 class="hero-title">
         輕鬆學日語<br />
         從零開始的JLPT之旅
@@ -20,36 +35,103 @@
         <button class="cta-secondary">觀看介紹影片</button>
       </div>
     </div>
-    <div class="hero-visual">
-      <div class="hero-placeholder">
-        <span class="placeholder-text">🗾</span>
-        <span class="placeholder-subtitle">日本語学習</span>
-      </div>
+
+    <!-- 輪播指示器 -->
+    <div class="carousel-indicators">
+      <button
+        v-for="(_, index) in carouselImages"
+        :key="index"
+        :class="['indicator', { active: currentSlide === index }]"
+        @click="currentSlide = index"
+      />
     </div>
   </section>
 </template>
 
-<script setup lang="ts">
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 
 const authStore = useAuthStore()
+
+const carouselImages = ref([
+  { src: '/images/shrine.jpg', alt: '日本神社' },
+  { src: '/images/bamboo.jpg', alt: '竹林' },
+  { src: '/images/street.jpg', alt: '日本街道' },
+])
+
+const currentSlide = ref(0)
+let intervalId = null
+
+const nextSlide = () => {
+  currentSlide.value = (currentSlide.value + 1) % carouselImages.value.length
+}
+
+onMounted(() => {
+  intervalId = setInterval(nextSlide, 4000)
+})
+
+onUnmounted(() => {
+  if (intervalId) {
+    clearInterval(intervalId)
+  }
+})
 </script>
 
 <style scoped>
 .hero {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 60px;
+  justify-content: center;
   min-height: 480px;
   padding: 60px 80px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  overflow: hidden;
 }
 
+/* 背景輪播圖 */
+.carousel-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.carousel-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.8s ease-in-out;
+}
+
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+/* 半透明遮罩 */
+.carousel-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* 內容區塊 */
 .hero-content {
-  flex: 1;
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 24px;
+  max-width: 800px;
 }
 
 .hero-badge {
@@ -59,7 +141,7 @@ const authStore = useAuthStore()
   font-size: 14px;
   font-weight: 500;
   color: var(--text-white);
-  background-color: rgba(255, 255, 255, 0.125);
+  background-color: rgba(255, 255, 255, 0.2);
   border-radius: 100px;
 }
 
@@ -68,12 +150,13 @@ const authStore = useAuthStore()
   font-weight: 700;
   color: var(--text-white);
   line-height: 1.2;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .hero-subtitle {
   font-size: 18px;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.9);
   line-height: 1.6;
 }
 
@@ -81,6 +164,7 @@ const authStore = useAuthStore()
   display: flex;
   align-items: center;
   gap: 16px;
+  margin-top: 8px;
 }
 
 .cta-primary {
@@ -106,66 +190,70 @@ const authStore = useAuthStore()
   font-size: 16px;
   font-weight: 500;
   color: var(--text-white);
-  background-color: rgba(255, 255, 255, 0.125);
-  border: 1px solid rgba(255, 255, 255, 0.375);
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 12px;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
 .cta-secondary:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
-.hero-visual {
-  width: 400px;
-  height: 360px;
-  flex-shrink: 0;
-  background-color: var(--bg-white);
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.hero-placeholder {
-  width: 100%;
-  height: 100%;
+/* 輪播指示器 */
+.carousel-indicators {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  gap: 10px;
+  z-index: 2;
 }
 
-.placeholder-text {
-  font-size: 80px;
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.placeholder-subtitle {
-  font-size: 24px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  margin-top: 16px;
+.indicator:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.indicator.active {
+  background-color: var(--bg-white);
+  border-color: var(--bg-white);
 }
 
 @media (max-width: 1024px) {
   .hero {
-    flex-direction: column;
-    padding: 40px;
-  }
-
-  .hero-content {
-    text-align: center;
-    align-items: center;
+    padding: 60px 24px;
+    min-height: 420px;
   }
 
   .hero-title {
     font-size: 36px;
   }
 
-  .hero-visual {
+  .hero-subtitle {
+    font-size: 16px;
+  }
+
+  .hero-cta {
+    flex-direction: column;
     width: 100%;
-    max-width: 400px;
-    height: 280px;
+  }
+
+  .cta-primary,
+  .cta-secondary {
+    width: 100%;
+    text-align: center;
   }
 }
 </style>
