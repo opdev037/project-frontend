@@ -47,7 +47,7 @@
       <section class="news-section">
         <h3 class="section-title">最新消息</h3>
         <div class="news-list">
-          <a href="#" class="news-item">小明の秘訣「一年內從零開始，輕鬆學會N3」</a>
+          <a href="#" class="news-item">學習の秘訣「一年內從零開始，輕鬆學會N3」</a>
           <a href="#" class="news-item">免費好禮｜五十音練習簿、練習帳、實用日語PDF</a>
           <a href="#" class="news-item">7天免費訓練｜每天30分鐘，輕鬆搞定五十音</a>
         </div>
@@ -163,7 +163,7 @@ const courseTab = ref('n5')
 const currentSlide = ref(0)
 
 const courses = ref([
-  { id: 1, title: '與三太郎的相遇（三太郎との出会い）', level: 'n5', levelText: '初級(N5)試聽課程' },
+  { id: 1, title: '與Q太郎的相遇（Q太郎との出会い）', level: 'n5', levelText: '初級(N5)試聽課程' },
   { id: 2, title: '自我介紹（自己紹介）', level: 'n5', levelText: '初級(N5)試聽課程' },
   { id: 3, title: '點餐好難（注文を取るのが難しい）', level: 'n4', levelText: '進階(N4)試聽課程' },
   { id: 4, title: '兼職工作（アルバイト）', level: 'n4', levelText: '進階(N4)試聽課程' },
