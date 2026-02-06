@@ -31,7 +31,7 @@ interface NewsItem {
 const newsItems = ref<NewsItem[]>([
   {
     id: '1',
-    text: '小明の秘訣「一年內從零開始，輕鬆學會N3」',
+    text: '學習の秘訣「一年內從零開始，輕鬆學會N3」',
     color: '#E85A4F',
     href: '/news/1',
   },
