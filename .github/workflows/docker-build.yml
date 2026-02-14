@@ -8,7 +8,7 @@ on:
 
 env:
   REGISTRY: asia-east1-docker.pkg.dev
-  GKE_IMAGE: asia-east1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/bukenon/project-frontend
+  GKE_IMAGE: asia-east1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/gke-test-1/project-frontend
   DOCKERHUB_IMAGE: ${{ secrets.DOCKER_USERNAME }}/project-frontend
 
 jobs:
