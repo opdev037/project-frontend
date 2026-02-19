@@ -53,8 +53,7 @@ const switchToRegister = () => {
 }
 
 const onLoginSuccess = () => {
-  // 登入成功後可以做一些事情，例如顯示歡迎訊息
-  console.log('登入成功！')
+  showLoginModal.value = false
 }
 </script>
 
